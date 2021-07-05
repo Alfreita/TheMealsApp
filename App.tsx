@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
+import ProductsStack from "./navigation/ShopNavigator";
+
 import productReducer from "./reduxStore/reducer/products";
 
 const rootReducer = combineReducers({
@@ -12,7 +14,11 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer);
 
 export default function App() {
-  return <Provider store={store}></Provider>;
+  return (
+    <Provider store={store}>
+      <ProductsStack />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
