@@ -1,10 +1,12 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
 import { Platform } from "react-native";
-import Colors from "../constants/Colors";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { enableScreens } from "react-native-screens";
+import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
+import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
+import Colors from "../constants/Colors";
+
 enableScreens();
 const ProductsNavigator = createStackNavigator();
 
@@ -30,6 +32,10 @@ const ProductsStack = () => {
           name="ProductOV"
           component={ProductOverViewScreen}
           options={{ title: "Product OverView" }}
+        />
+        <ProductsNavigator.Screen
+          name="ProductDetail"
+          component={ProductDetailsScreen}
         />
       </ProductsNavigator.Navigator>
     </NavigationContainer>
