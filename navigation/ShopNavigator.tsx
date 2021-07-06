@@ -17,7 +17,7 @@ const defaultHeaderStyle = () => {
     },
     headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
     headerTitleStyle: {
-      fontWeight: "bold",
+      fontFamily: "open-sans-bold",
     },
   };
 };
