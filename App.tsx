@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer);
 
 const fetchFont = async () => {
-  Font.loadAsync({
+  await Font.loadAsync({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
