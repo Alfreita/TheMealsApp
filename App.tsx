@@ -10,10 +10,12 @@ import ProductsStack from "./navigation/ShopNavigator";
 
 import productReducer from "./reduxStore/reducer/products";
 import cartReducer from "./reduxStore/reducer/cart";
+import orderReducer from "./reduxStore/reducer/order";
 
 const rootReducer = combineReducers({
   products: productReducer,
-  cart:cartReducer
+  cart:cartReducer,
+  order:orderReducer
 });
 const store = createStore(rootReducer);
 
