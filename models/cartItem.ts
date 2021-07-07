@@ -1,4 +1,4 @@
-class CartItem {
+class CartModelItem {
   quantity: number;
   productPrice: number;
   productTitle: string;
@@ -15,4 +15,4 @@ class CartItem {
     this.sum = sum;
   }
 }
-export default CartItem;
+export default CartModelItem;
