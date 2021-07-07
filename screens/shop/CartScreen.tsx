@@ -54,6 +54,7 @@ const CartScreen = (props: any) => {
             onRemove={() => {
               dispacth(cartActions.removeFromCart(itemData.item.productId));
             }}
+            deletable
           />
         )}
       />
