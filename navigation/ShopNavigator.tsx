@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { enableScreens } from "react-native-screens";
 import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
+import CartScreen from "../screens/shop/CartScreen";
 import Colors from "../constants/Colors";
 
 enableScreens();
@@ -37,6 +38,7 @@ const ProductsStack = () => {
           name="ProductDetail"
           component={ProductDetailsScreen}
         />
+        <ProductsNavigator.Screen name="CartScreen" component={CartScreen} />
       </ProductsNavigator.Navigator>
     </NavigationContainer>
   );

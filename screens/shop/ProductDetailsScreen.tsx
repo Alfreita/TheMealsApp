@@ -6,10 +6,14 @@ import {
   Button,
   Image,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import * as cartAction from "../../reduxStore/actions/cart";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../components/UI/HeaderButton";
+
 const ProductDetailsScreen = (props: any) => {
   const id = props.route.params.productId;
   const title = props.route.params.title;
@@ -17,11 +21,12 @@ const ProductDetailsScreen = (props: any) => {
   const selectProduct = useSelector((state: any) =>
     state.products.availableProducts.find((prod: any) => prod.id === id)
   );
+  const { navigation } = props;
   useLayoutEffect(() => {
-    props.navigation.setOptions({
+    navigation.setOptions({
       title: title === "" ? "No title" : title,
     });
-  }, [title]);
+  }, [title, navigation]);
   return (
     <ScrollView>
       <Image style={styles.image} source={{ uri: selectProduct.imageUrl }} />
