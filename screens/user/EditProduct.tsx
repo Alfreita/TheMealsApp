@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -10,9 +10,11 @@ import {
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
+import * as productAction from "../../reduxStore/actions/products";
 
 const EditProductScreen = (props: any) => {
   const id = props.route.params.productId;
+  const dispatch = useDispatch();
   const addedProduct = useSelector((state: any) =>
     state.products.userProducts.find((prod: any) => prod.id === id)
   );
@@ -24,10 +26,17 @@ const EditProductScreen = (props: any) => {
   const [description, setDescription] = useState(
     addedProduct ? addedProduct.description : ""
   );
-
-  // const title = props.route.params.title;
+  const submitHandler = () => {
+    if (addedProduct) {
+      dispatch(productAction.updateProduct(id, title, description, imageUrl));
+    } else {
+      dispatch(
+        productAction.createProduct(title, description, imageUrl, Number(price))
+      );
+    }
+  };
   const { navigation } = props;
-  const dispatch = useDispatch();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: id ? "Edit Product" : "Add Product",
@@ -38,11 +47,7 @@ const EditProductScreen = (props: any) => {
             iconName={
               Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
             }
-            onPress={() => {
-              navigation.navigate({
-                name: "EditProduct",
-              });
-            }}
+            onPress={submitHandler}
           />
         </HeaderButtons>
       ),
