@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
-import { FlatList, Platform, Button } from "react-native";
+import { FlatList, Platform, Button, Alert } from "react-native";
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
 import { useSelector, useDispatch } from "react-redux";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
@@ -11,6 +11,19 @@ const UserProductScreen = (props: any) => {
   const userProducts = useSelector((state: any) => state.products.userProducts);
   const { navigation } = props;
   const dispatch = useDispatch();
+  const deleteHandler = (id: any) => {
+    Alert.alert("Are you shure?", "Do you really want to delete this item?", [
+      { text: "No", style: "cancel" },
+      {
+        text: "Yes",
+        style: "destructive",
+        onPress: () => {
+          dispatch(productAction.deleteProduct(id));
+        },
+      },
+    ]);
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -71,9 +84,7 @@ const UserProductScreen = (props: any) => {
           <Button
             color={Colors.primary}
             title="Delete"
-            onPress={() => {
-              dispatch(productAction.deleteProduct(itemData.item.id));
-            }}
+            onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductOverViewComponent>
       )}

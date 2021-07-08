@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Platform,
+  Alert,
 } from "react-native";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -15,6 +16,7 @@ import * as productAction from "../../reduxStore/actions/products";
 const EditProductScreen = (props: any) => {
   const id = props.route.params.productId;
   const dispatch = useDispatch();
+  const { navigation } = props;
   const addedProduct = useSelector((state: any) =>
     state.products.userProducts.find((prod: any) => prod.id === id)
   );
@@ -29,13 +31,14 @@ const EditProductScreen = (props: any) => {
   const submitHandler = () => {
     if (addedProduct) {
       dispatch(productAction.updateProduct(id, title, description, imageUrl));
+      navigation.goBack();
     } else {
       dispatch(
         productAction.createProduct(title, description, imageUrl, Number(price))
       );
+      navigation.goBack();
     }
   };
-  const { navigation } = props;
 
   useLayoutEffect(() => {
     navigation.setOptions({
