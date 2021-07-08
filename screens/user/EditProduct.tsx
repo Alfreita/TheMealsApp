@@ -12,6 +12,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 
 const EditProductScreen = (props: any) => {
+  const id = props.route.params.productId;
   const addedProduct = useSelector((state: any) =>
     state.products.userProducts.find((prod: any) => prod.id === id)
   );
@@ -23,7 +24,6 @@ const EditProductScreen = (props: any) => {
   const [description, setDescription] = useState(
     addedProduct ? addedProduct.description : ""
   );
-  const id = props.route.params.productId;
 
   // const title = props.route.params.title;
   const { navigation } = props;
