@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useCallback } from "react";
+import React, { useLayoutEffect, useState, useReducer } from "react";
 import {
   View,
   StyleSheet,
@@ -29,6 +29,21 @@ const EditProductScreen = (props: any) => {
     addedProduct ? addedProduct.description : ""
   );
   const submitHandler = () => {
+    if (
+      title.length <= 0 ||
+      imageUrl.length <= 0 ||
+      price.length <= 0 ||
+      description.length <= 0
+    ) {
+      Alert.alert("Sorry", "You need to fill every fields", [
+        {
+          text: "Okay",
+          style: "destructive",
+        },
+      ]);
+      return;
+    }
+
     if (addedProduct) {
       dispatch(productAction.updateProduct(id, title, description, imageUrl));
       navigation.goBack();
@@ -65,7 +80,11 @@ const EditProductScreen = (props: any) => {
             style={styles.input}
             value={title}
             onChangeText={(text) => setTitle(text)}
+            keyboardType="default"
           />
+          {title.length <= 0 ? (
+            <Text style={{ color: "red" }}>Fill this field</Text>
+          ) : null}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
@@ -74,6 +93,9 @@ const EditProductScreen = (props: any) => {
             value={imageUrl}
             onChangeText={(text) => setImageUrl(text)}
           />
+          {imageUrl.length <= 0 ? (
+            <Text style={{ color: "red" }}>Fill this field</Text>
+          ) : null}
         </View>
         {addedProduct ? null : (
           <View style={styles.formControl}>
@@ -82,7 +104,11 @@ const EditProductScreen = (props: any) => {
               style={styles.input}
               value={price}
               onChangeText={(text) => setPrice(text)}
+              keyboardType="decimal-pad"
             />
+            {price.length <= 0 ? (
+              <Text style={{ color: "red" }}>Fill this field</Text>
+            ) : null}
           </View>
         )}
 
@@ -93,6 +119,9 @@ const EditProductScreen = (props: any) => {
             value={description}
             onChangeText={(text) => setDescription(text)}
           />
+          {description.length <= 0 ? (
+            <Text style={{ color: "red" }}>Fill this field</Text>
+          ) : null}
         </View>
       </View>
     </ScrollView>
