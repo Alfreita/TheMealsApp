@@ -4,6 +4,8 @@ import ProductOverViewComponent from "../../components/shop/ProductOverViewCompo
 import { useSelector } from "react-redux";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { Button } from "react-native";
+import Colors from "../../constants/Colors";
 
 const UserProductScreen = (props: any) => {
   const userProducts = useSelector((state: any) => state.products.userProducts);
@@ -34,7 +36,22 @@ const UserProductScreen = (props: any) => {
           price={itemData.item.price}
           onViewDetail={() => {}}
           onAddToCart={() => {}}
-        />
+        >
+          <Button
+            color={Colors.primary}
+            title="Edit"
+            onPress={() => {
+              props.navigation.navigate({
+                name: "ProductDetail",
+                params: {
+                  productId: itemData.item.id,
+                  title: itemData.item.title,
+                },
+              });
+            }}
+          />
+          <Button color={Colors.primary} title="Delete" onPress={() => {}} />
+        </ProductOverViewComponent>
       )}
     />
   );

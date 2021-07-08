@@ -1,11 +1,12 @@
 import React, { useLayoutEffect } from "react";
-import { FlatList, StyleSheet, Platform } from "react-native";
+import { FlatList, StyleSheet, Platform, Button } from "react-native";
 
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../reduxStore/actions/cart";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
+import Colors from "../../constants/Colors";
 
 const ProductOverViewScreen = (props: any) => {
   const products = useSelector(
@@ -53,19 +54,28 @@ const ProductOverViewScreen = (props: any) => {
           title={itemData.item.title}
           price={itemData.item.price}
           image={itemData.item.imageUrl}
-          onViewDetail={() => {
-            props.navigation.navigate({
-              name: "ProductDetail",
-              params: {
-                productId: itemData.item.id,
-                title: itemData.item.title,
-              },
-            });
-          }}
-          onAddToCart={() => {
-            dispatch(cartActions.addToCart(itemData.item));
-          }}
-        />
+        >
+          <Button
+            color={Colors.primary}
+            title="View Details"
+            onPress={() => {
+              props.navigation.navigate({
+                name: "ProductDetail",
+                params: {
+                  productId: itemData.item.id,
+                  title: itemData.item.title,
+                },
+              });
+            }}
+          />
+          <Button
+            color={Colors.primary}
+            title="To Cart"
+            onPress={() => {
+              dispatch(cartActions.addToCart(itemData.item));
+            }}
+          />
+        </ProductOverViewComponent>
       )}
     />
   );

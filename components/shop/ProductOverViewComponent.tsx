@@ -12,18 +12,7 @@ const ProductOverViewComponent = (props: any) => {
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.price}>{props.price.toFixed(2)}$</Text>
       </View>
-      <View style={styles.buttonView}>
-        <Button
-          color={Colors.primary}
-          title="View Details"
-          onPress={props.onViewDetail}
-        />
-        <Button
-          color={Colors.primary}
-          title="To Cart"
-          onPress={props.onAddToCart}
-        />
-      </View>
+      <View style={styles.buttonView}>{props.children}</View>
     </View>
   );
 };
