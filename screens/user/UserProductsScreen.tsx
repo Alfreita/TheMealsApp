@@ -24,6 +24,19 @@ const UserProductScreen = (props: any) => {
           />
         </HeaderButtons>
       ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="cart"
+            iconName={Platform.OS === "android" ? "md-create" : "ios-create"}
+            onPress={() => {
+              navigation.navigate({
+                name: "EditProduct",
+              });
+            }}
+          />
+        </HeaderButtons>
+      ),
     });
   }, [navigation]);
   return (
@@ -43,7 +56,7 @@ const UserProductScreen = (props: any) => {
             title="Edit"
             onPress={() => {
               props.navigation.navigate({
-                name: "ProductDetail",
+                name: "EditProduct",
                 params: {
                   productId: itemData.item.id,
                   title: itemData.item.title,

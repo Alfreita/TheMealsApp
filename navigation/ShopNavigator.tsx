@@ -8,6 +8,7 @@ import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import UserProductScreen from "../screens/user/UserProductsScreen";
+import EditProductScreen from "../screens/user/EditProduct";
 import Colors from "../constants/Colors";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -74,6 +75,11 @@ const UserStack = () => {
         name="UserProduct"
         component={UserProductScreen}
         options={{ title: " Your products" }}
+      />
+      <UserNavigator.Screen
+        name="EditProduct"
+        component={EditProductScreen}
+        options={{ title: " Edit products" }}
       />
     </UserNavigator.Navigator>
   );
