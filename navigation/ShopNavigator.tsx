@@ -7,6 +7,7 @@ import { enableScreens } from "react-native-screens";
 import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
+import UserProductScreen from "../screens/user/UserProductsScreen";
 import Colors from "../constants/Colors";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 enableScreens();
 const ProductsNavigator = createStackNavigator();
 const OrdersNavigator = createStackNavigator();
+const UserNavigator = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const defaultHeaderStyle = () => {
@@ -62,6 +64,20 @@ const OrdersStack = () => {
   );
 };
 
+const UserStack = () => {
+  return (
+    <UserNavigator.Navigator
+      initialRouteName="ProductOV"
+      screenOptions={defaultHeaderStyle}
+    >
+      <UserNavigator.Screen
+        name="UserProduct"
+        component={UserProductScreen}
+        options={{ title: " Your products" }}
+      />
+    </UserNavigator.Navigator>
+  );
+};
 const DrawerNavigation = () => {
   return (
     <NavigationContainer>
@@ -94,6 +110,19 @@ const DrawerNavigation = () => {
             drawerIcon: ({ focused, size }) => (
               <Ionicons
                 name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                size={23}
+                color={focused ? Colors.primary : "gray"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="User"
+          component={UserStack}
+          options={{
+            drawerIcon: ({ focused, size }) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-create" : "ios-create"}
                 size={23}
                 color={focused ? Colors.primary : "gray"}
               />
