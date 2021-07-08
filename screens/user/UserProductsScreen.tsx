@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { FlatList, Platform, Button } from "react-native";
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
 import { useSelector, useDispatch } from "react-redux";
@@ -32,6 +32,10 @@ const UserProductScreen = (props: any) => {
             onPress={() => {
               navigation.navigate({
                 name: "EditProduct",
+                params: {
+                  productId: "",
+                  title: "",
+                },
               });
             }}
           />

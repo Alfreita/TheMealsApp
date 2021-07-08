@@ -76,11 +76,7 @@ const UserStack = () => {
         component={UserProductScreen}
         options={{ title: " Your products" }}
       />
-      <UserNavigator.Screen
-        name="EditProduct"
-        component={EditProductScreen}
-        options={{ title: " Edit products" }}
-      />
+      <UserNavigator.Screen name="EditProduct" component={EditProductScreen} />
     </UserNavigator.Navigator>
   );
 };
