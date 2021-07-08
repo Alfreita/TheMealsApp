@@ -1,15 +1,16 @@
 import React, { useLayoutEffect } from "react";
-import { FlatList, Platform } from "react-native";
+import { FlatList, Platform, Button } from "react-native";
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { Button } from "react-native";
 import Colors from "../../constants/Colors";
+import * as productAction from "../../reduxStore/actions/products";
 
 const UserProductScreen = (props: any) => {
   const userProducts = useSelector((state: any) => state.products.userProducts);
   const { navigation } = props;
+  const dispatch = useDispatch();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -50,7 +51,13 @@ const UserProductScreen = (props: any) => {
               });
             }}
           />
-          <Button color={Colors.primary} title="Delete" onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title="Delete"
+            onPress={() => {
+              dispatch(productAction.deleteProduct(itemData.item.id));
+            }}
+          />
         </ProductOverViewComponent>
       )}
     />

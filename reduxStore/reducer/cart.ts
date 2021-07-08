@@ -1,9 +1,10 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
 import CartModelItem from "../../models/cartItem";
 import { ADD_ORDER } from "../actions/order";
+import { DELETE_PRODUCT } from "../actions/products";
 
 const initialState = {
-  items: {},
+  items: <any>{},
   totalAmount: 0,
 };
 const cartReducer = (state = initialState, action: any) => {
@@ -63,6 +64,18 @@ const cartReducer = (state = initialState, action: any) => {
       };
     case ADD_ORDER:
       return initialState;
+    case DELETE_PRODUCT:
+      if (!state.items[action.productId]) {
+        return state;
+      }
+      const updatedItems = { ...state.items };
+      const itemTotal = state.items[action.productId].sum;
+      delete updatedItems[action.productId];
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: state.totalAmount - itemTotal,
+      };
   }
   return state;
 };
