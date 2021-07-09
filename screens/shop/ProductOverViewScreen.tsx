@@ -1,9 +1,10 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import { FlatList, StyleSheet, Platform, Button } from "react-native";
 
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../reduxStore/actions/cart";
+import * as productsAction from "../../reduxStore/actions/products";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
@@ -46,6 +47,9 @@ const ProductOverViewScreen = (props: any) => {
     });
   }, [navigation]);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(productsAction.fetchProducts());
+  }, [dispatch]);
   return (
     <FlatList
       data={products}

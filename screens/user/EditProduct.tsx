@@ -65,7 +65,7 @@ const EditProductScreen = (props: any) => {
             iconName={
               Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
             }
-            onPress={submitHandler}
+            onPress={() => submitHandler()}
           />
         </HeaderButtons>
       ),
