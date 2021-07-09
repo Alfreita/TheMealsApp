@@ -1,4 +1,9 @@
-import React, { useLayoutEffect, useState, useReducer } from "react";
+import React, {
+  useLayoutEffect,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import {
   View,
   StyleSheet,
@@ -24,10 +29,11 @@ const EditProductScreen = (props: any) => {
   const [imageUrl, setImageUrl] = useState(
     addedProduct ? addedProduct.imageUrl : ""
   );
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(addedProduct ? addedProduct.price : "");
   const [description, setDescription] = useState(
     addedProduct ? addedProduct.description : ""
   );
+
   const submitHandler = () => {
     if (
       title.length <= 0 ||
@@ -43,7 +49,6 @@ const EditProductScreen = (props: any) => {
       ]);
       return;
     }
-
     if (addedProduct) {
       dispatch(productAction.updateProduct(id, title, description, imageUrl));
       navigation.goBack();
@@ -70,7 +75,7 @@ const EditProductScreen = (props: any) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation, title, imageUrl, description, price]);
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -97,7 +102,7 @@ const EditProductScreen = (props: any) => {
             <Text style={{ color: "red" }}>Fill this field</Text>
           ) : null}
         </View>
-        {addedProduct ? null : (
+        {!addedProduct && (
           <View style={styles.formControl}>
             <Text style={styles.label}>Price</Text>
             <TextInput

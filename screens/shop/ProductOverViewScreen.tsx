@@ -78,7 +78,7 @@ const ProductOverViewScreen = (props: any) => {
   }, [dispatch, loadProducts]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListner("willFocus", loadProducts);
+    const willFocusSub = navigation.addListener("willFocus", loadProducts);
     return () => {
       willFocusSub.remove();
     };
