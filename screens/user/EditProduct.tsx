@@ -12,12 +12,13 @@ import {
   ScrollView,
   Platform,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import * as productAction from "../../reduxStore/actions/products";
-
+import Colors from "../../constants/Colors";
 const EditProductScreen = (props: any) => {
   const id = props.route.params.productId;
   const dispatch = useDispatch();
@@ -33,30 +34,51 @@ const EditProductScreen = (props: any) => {
   const [description, setDescription] = useState(
     addedProduct ? addedProduct.description : ""
   );
+  const [isLoading, setIsLoading] = useState(false);
 
-  const submitHandler = () => {
-    if (
-      title.length <= 0 ||
-      imageUrl.length <= 0 ||
-      price.length <= 0 ||
-      description.length <= 0
-    ) {
-      Alert.alert("Sorry", "You need to fill every fields", [
+  const submitHandler = async () => {
+    try {
+      if (
+        title.length <= 0 ||
+        imageUrl.length <= 0 ||
+        price.length <= 0 ||
+        description.length <= 0
+      ) {
+        Alert.alert("Sorry", "You need to fill every fields", [
+          {
+            text: "Okay",
+            style: "destructive",
+          },
+        ]);
+        return;
+      }
+      if (addedProduct) {
+        setIsLoading(true);
+        await dispatch(
+          productAction.updateProduct(id, title, description, imageUrl)
+        );
+        setIsLoading(false);
+        navigation.goBack();
+      } else {
+        setIsLoading(true);
+        dispatch(
+          productAction.createProduct(
+            title,
+            description,
+            imageUrl,
+            Number(price)
+          )
+        );
+        setIsLoading(false);
+        navigation.goBack();
+      }
+    } catch (error) {
+      Alert.alert("Sorry", "something went wrong, please try again", [
         {
           text: "Okay",
           style: "destructive",
         },
       ]);
-      return;
-    }
-    if (addedProduct) {
-      dispatch(productAction.updateProduct(id, title, description, imageUrl));
-      navigation.goBack();
-    } else {
-      dispatch(
-        productAction.createProduct(title, description, imageUrl, Number(price))
-      );
-      navigation.goBack();
     }
   };
 
@@ -76,6 +98,13 @@ const EditProductScreen = (props: any) => {
       ),
     });
   }, [navigation, title, imageUrl, description, price]);
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
   return (
     <ScrollView>
       <View style={styles.form}>
