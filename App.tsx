@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers ,applyMiddleware} from "redux";
+import ReduxThunk from 'redux-thunk'
 import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
@@ -17,7 +18,7 @@ const rootReducer = combineReducers({
   cart:cartReducer,
   order:orderReducer
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
 
 const fetchFont = async () => {
   await Font.loadAsync({
