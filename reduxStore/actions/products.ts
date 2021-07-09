@@ -6,26 +6,33 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 
 export const fetchProducts = () => {
-  return async (dispatch: any) => {
-    const response = await fetch(
-      "https://theshopapp-2071e-default-rtdb.firebaseio.com/products.json"
-    );
-    const resData = await response.json();
-    const loadedProducts = [];
-    for (const key in resData) {
-      loadedProducts.push(
-        new Product(
-          key,
-          "u1",
-          resData[key].title,
-          resData[key].imageUrl,
-          resData[key].description,
-          resData[key].price
-        )
+  try {
+    return async (dispatch: any) => {
+      const response = await fetch(
+        "https://theshopapp-2071e-default-rtdb.firebaseio.com/products.json"
       );
-    }
-    dispatch({ type: SET_PRODUCTS, products: loadedProducts });
-  };
+      if (!response.ok) {
+        throw new Error("something went wrong");
+      }
+      const resData = await response.json();
+      const loadedProducts = [];
+      for (const key in resData) {
+        loadedProducts.push(
+          new Product(
+            key,
+            "u1",
+            resData[key].title,
+            resData[key].imageUrl,
+            resData[key].description,
+            resData[key].price
+          )
+        );
+      }
+      dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+    };
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteProduct = (productId: any) => {

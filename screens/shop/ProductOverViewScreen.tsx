@@ -1,5 +1,18 @@
-import React, { useLayoutEffect, useEffect } from "react";
-import { FlatList, StyleSheet, Platform, Button } from "react-native";
+import React, {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Platform,
+  Button,
+  ActivityIndicator,
+  View,
+  Text,
+} from "react-native";
 
 import ProductOverViewComponent from "../../components/shop/ProductOverViewComponent";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +23,8 @@ import CustomHeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 const ProductOverViewScreen = (props: any) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setError] = useState(false);
   const products = useSelector(
     (state: any) => state.products.availableProducts
   );
@@ -47,9 +62,44 @@ const ProductOverViewScreen = (props: any) => {
     });
   }, [navigation]);
   const dispatch = useDispatch();
+  const loadProducts = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      await dispatch(productsAction.fetchProducts());
+      setIsLoading(false);
+      setError(false);
+    } catch (error) {
+      setError(true);
+    }
+  }, [dispatch, setIsLoading, setError]);
+
   useEffect(() => {
-    dispatch(productsAction.fetchProducts());
-  }, [dispatch]);
+    loadProducts();
+  }, [dispatch, loadProducts]);
+
+  if (isError) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>An error ocurred!</Text>
+        <Button title="Try Again" onPress={() => loadProducts()} />
+      </View>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+  if (!isLoading && products.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>No product to show, start adding a new one!!</Text>
+      </View>
+    );
+  }
   return (
     <FlatList
       data={products}
