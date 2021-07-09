@@ -77,6 +77,13 @@ const ProductOverViewScreen = (props: any) => {
     loadProducts();
   }, [dispatch, loadProducts]);
 
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListner("willFocus", loadProducts);
+    return () => {
+      willFocusSub.remove();
+    };
+  }, [loadProducts]);
+
   if (isError) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
