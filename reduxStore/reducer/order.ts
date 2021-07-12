@@ -2,7 +2,7 @@ import Order from "../../models/order";
 import { ADD_ORDER } from "../actions/order";
 
 const initialState = {
-  orders: [],
+  orders:<any> [],
 };
 
 const orderReducer = (state = initialState, action: any) => {
