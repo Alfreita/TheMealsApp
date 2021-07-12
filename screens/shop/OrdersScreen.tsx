@@ -13,7 +13,7 @@ const OrderScreen = (props: any) => {
   const { navigation } = props;
   const dispatch = useDispatch();
   useEffect(() => {
-    useState(true);
+    setIsLoading(true);
     dispatch(orderActions.fetchOrders()).then(() => {
       setIsLoading(false);
     });

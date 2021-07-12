@@ -85,9 +85,9 @@ const ProductOverViewScreen = (props: any) => {
 
   useEffect(() => {
     const willFocusSub = navigation.addListener("willFocus", loadProducts);
-    return () => {
-      willFocusSub.remove();
-    };
+    // return () => {
+    //   willFocusSub.remove();
+    // };
   }, [loadProducts]);
 
   if (isError) {
