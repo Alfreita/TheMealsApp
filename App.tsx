@@ -1,13 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { createStore, combineReducers ,applyMiddleware} from "redux";
-import ReduxThunk from 'redux-thunk'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import ReduxThunk from "redux-thunk";
 import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
-import ProductsStack from "./navigation/ShopNavigator";
+import * as Navigation from "./navigation/ShopNavigator";
 
 import productReducer from "./reduxStore/reducer/products";
 import cartReducer from "./reduxStore/reducer/cart";
@@ -15,10 +15,10 @@ import orderReducer from "./reduxStore/reducer/order";
 
 const rootReducer = combineReducers({
   products: productReducer,
-  cart:cartReducer,
-  order:orderReducer
+  cart: cartReducer,
+  order: orderReducer,
 });
-const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFont = async () => {
   await Font.loadAsync({
@@ -42,7 +42,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <ProductsStack />
+      <Navigation.AuthStack />
     </Provider>
   );
 }

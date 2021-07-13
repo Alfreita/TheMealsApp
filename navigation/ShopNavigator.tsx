@@ -9,14 +9,16 @@ import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import CartScreen from "../screens/shop/CartScreen";
 import UserProductScreen from "../screens/user/UserProductsScreen";
 import EditProductScreen from "../screens/user/EditProduct";
-import Colors from "../constants/Colors";
 import OrderScreen from "../screens/shop/OrdersScreen";
+import AuthScrenn from "../screens/user/AuthScreen";
+import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
 enableScreens();
 const ProductsNavigator = createStackNavigator();
 const OrdersNavigator = createStackNavigator();
 const UserNavigator = createStackNavigator();
+const AuthNavigator = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const defaultHeaderStyle = () => {
@@ -80,7 +82,28 @@ const UserStack = () => {
     </UserNavigator.Navigator>
   );
 };
-const DrawerNavigation = () => {
+
+export const AuthStack = () => {
+  return (
+    <NavigationContainer>
+      <AuthNavigator.Navigator
+        initialRouteName="ProductOV"
+        screenOptions={defaultHeaderStyle}
+      >
+        <AuthNavigator.Screen
+          name="Auth"
+          component={AuthScrenn}
+          options={{ title: "Login" }}
+        />
+        <AuthNavigator.Screen
+          name="EditProduct"
+          component={EditProductScreen}
+        />
+      </AuthNavigator.Navigator>
+    </NavigationContainer>
+  );
+};
+export const DrawerNavigation = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
@@ -135,5 +158,3 @@ const DrawerNavigation = () => {
     </NavigationContainer>
   );
 };
-
-export default DrawerNavigation;
