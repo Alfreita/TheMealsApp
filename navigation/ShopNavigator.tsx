@@ -10,9 +10,11 @@ import CartScreen from "../screens/shop/CartScreen";
 import UserProductScreen from "../screens/user/UserProductsScreen";
 import EditProductScreen from "../screens/user/EditProduct";
 import OrderScreen from "../screens/shop/OrdersScreen";
-import AuthScrenn from "../screens/user/AuthScreen";
+import AuthScreen from "../screens/user/AuthScreen";
+
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import CreateUserScreen from "../screens/user/CreateUserScreen";
 
 enableScreens();
 const ProductsNavigator = createStackNavigator();
@@ -92,12 +94,13 @@ export const AuthStack = () => {
       >
         <AuthNavigator.Screen
           name="Auth"
-          component={AuthScrenn}
+          component={AuthScreen}
           options={{ title: "Login" }}
         />
         <AuthNavigator.Screen
-          name="EditProduct"
-          component={EditProductScreen}
+          name="CreateUser"
+          options={{ title: "Create user" }}
+          component={CreateUserScreen}
         />
       </AuthNavigator.Navigator>
     </NavigationContainer>

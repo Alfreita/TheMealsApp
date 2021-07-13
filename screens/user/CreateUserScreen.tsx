@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   StyleSheet,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 
 import InputComponent from "../../components/UI/Input";
@@ -14,10 +16,24 @@ import Colors from "../../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as authAction from "../../reduxStore/actions/auth";
 
-const AuthScreen = (props: any) => {
+const CreateUserScreen = (props: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
+  const [secondPass, setSecondPass] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const validatePassword = async () => {
+    if (password !== secondPass) {
+      Alert.alert("Ooops", "Password and confirm password mismatch", [
+        { text: "Okay" },
+      ]);
+      return;
+    }
+    setIsLoading(true);
+    await dispatch(authAction.login(email, password));
+    setIsLoading(false);
+    props.navigation.goBack();
+  };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.containerText}>
@@ -35,23 +51,25 @@ const AuthScreen = (props: any) => {
           keyboardType="default"
           autoCapitalize="none"
         />
+        <InputComponent
+          textValue={secondPass}
+          setText={setSecondPass}
+          label="Password"
+          keyboardType="default"
+          autoCapitalize="none"
+        />
       </View>
-      <View style={styles.buttonContainer}>
+      {isLoading ? (
+        <ActivityIndicator color={Colors.primary} size="large" />
+      ) : (
         <Button
-          title="Login"
+          title="Create User"
           color={Colors.primary}
           onPress={() => {
-            dispatch(authAction.signUp(email, password));
+            validatePassword();
           }}
         />
-        <Button
-          title="Sign up"
-          color={Colors.accent}
-          onPress={() => {
-            props.navigation.navigate({ name: "CreateUser" });
-          }}
-        />
-      </View>
+      )}
     </KeyboardAvoidingView>
   );
 };
@@ -71,4 +89,4 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
-export default AuthScreen;
+export default CreateUserScreen;
