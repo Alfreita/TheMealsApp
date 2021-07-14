@@ -2,7 +2,7 @@ import React from "react";
 import { Platform } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { enableScreens } from "react-native-screens";
 import ProductOverViewScreen from "../screens/shop/ProductOverViewScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
@@ -12,6 +12,7 @@ import EditProductScreen from "../screens/user/EditProduct";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import AuthScreen from "../screens/user/AuthScreen";
 import StartUpScreen from "../screens/StartupScreen";
+import LogoutButton from "../components/UI/LogoutButton";
 
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -119,6 +120,7 @@ const DrawerNavigation = (isAuth: boolean, setIsAuth: any) => {
     return (
       <NavigationContainer>
         <Drawer.Navigator
+          drawerContent={(props) => <LogoutButton {...props} />}
           initialRouteName="Products"
           drawerContentOptions={{
             activeTintColor: Colors.primary,
