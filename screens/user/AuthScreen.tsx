@@ -20,7 +20,7 @@ const AuthScreen = (props: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const setIsAuth = props.route.params.setIsAuth;
   const dispatch = useDispatch();
   const doLogin = async () => {
     try {
@@ -29,10 +29,12 @@ const AuthScreen = (props: any) => {
         return;
       }
       setIsLoading(true);
-      await dispatch(authAction.signUp(email, password));
+      await dispatch(authAction.login(email, password));
       setIsLoading(false);
+      setIsAuth(true);
     } catch (error) {
       Alert.alert("Opss", error.message, [{ text: "Okay" }]);
+      setIsLoading(false);
     }
   };
   return (

@@ -61,7 +61,7 @@ const ProductsStack = () => {
 const OrdersStack = () => {
   return (
     <OrdersNavigator.Navigator
-      initialRouteName="ProductOV"
+      initialRouteName="Orders"
       screenOptions={defaultHeaderStyle}
     >
       <OrdersNavigator.Screen name="Orders" component={OrderScreen} />
@@ -72,7 +72,7 @@ const OrdersStack = () => {
 const UserStack = () => {
   return (
     <UserNavigator.Navigator
-      initialRouteName="ProductOV"
+      initialRouteName="UserProduct"
       screenOptions={defaultHeaderStyle}
     >
       <UserNavigator.Screen
@@ -85,17 +85,18 @@ const UserStack = () => {
   );
 };
 
-export const AuthStack = () => {
+const AuthStack = (setIsAuth: any) => {
   return (
     <NavigationContainer>
       <AuthNavigator.Navigator
-        initialRouteName="ProductOV"
+        initialRouteName="Auth"
         screenOptions={defaultHeaderStyle}
       >
         <AuthNavigator.Screen
           name="Auth"
           component={AuthScreen}
           options={{ title: "Login" }}
+          initialParams={{ setIsAuth }}
         />
         <AuthNavigator.Screen
           name="CreateUser"
@@ -106,58 +107,62 @@ export const AuthStack = () => {
     </NavigationContainer>
   );
 };
-export const DrawerNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Products"
-        drawerContentOptions={{
-          activeTintColor: Colors.primary,
-          labelStyle: {
-            fontFamily: "open-sans-bold",
-          },
-        }}
-      >
-        <Drawer.Screen
-          name="Products"
-          component={ProductsStack}
-          options={{
-            drawerIcon: ({ focused, size }) => (
-              <Ionicons
-                name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-                size={23}
-                color={focused ? Colors.primary : "gray"}
-              />
-            ),
+const DrawerNavigation = (isAuth: boolean, setIsAuth: any) => {
+  if (isAuth) {
+    return (
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName="Products"
+          drawerContentOptions={{
+            activeTintColor: Colors.primary,
+            labelStyle: {
+              fontFamily: "open-sans-bold",
+            },
           }}
-        />
-        <Drawer.Screen
-          name="Orders"
-          component={OrdersStack}
-          options={{
-            drawerIcon: ({ focused, size }) => (
-              <Ionicons
-                name={Platform.OS === "android" ? "md-list" : "ios-list"}
-                size={23}
-                color={focused ? Colors.primary : "gray"}
-              />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="User"
-          component={UserStack}
-          options={{
-            drawerIcon: ({ focused, size }) => (
-              <Ionicons
-                name={Platform.OS === "android" ? "md-create" : "ios-create"}
-                size={23}
-                color={focused ? Colors.primary : "gray"}
-              />
-            ),
-          }}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
+        >
+          <Drawer.Screen
+            name="Products"
+            component={ProductsStack}
+            options={{
+              drawerIcon: ({ focused, size }) => (
+                <Ionicons
+                  name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+                  size={23}
+                  color={focused ? Colors.primary : "gray"}
+                />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="Orders"
+            component={OrdersStack}
+            options={{
+              drawerIcon: ({ focused, size }) => (
+                <Ionicons
+                  name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                  size={23}
+                  color={focused ? Colors.primary : "gray"}
+                />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="User"
+            component={UserStack}
+            options={{
+              drawerIcon: ({ focused, size }) => (
+                <Ionicons
+                  name={Platform.OS === "android" ? "md-create" : "ios-create"}
+                  size={23}
+                  color={focused ? Colors.primary : "gray"}
+                />
+              ),
+            }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    );
+  } else return AuthStack(setIsAuth);
 };
+
+export default DrawerNavigation;
