@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   StyleSheet,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 
 import InputComponent from "../../components/UI/Input";
@@ -17,7 +19,22 @@ import * as authAction from "../../reduxStore/actions/auth";
 const AuthScreen = (props: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
+  const doLogin = async () => {
+    try {
+      if (email.length <= 0 || password.length <= 0) {
+        Alert.alert("Opss", "Please fill all field", [{ text: "Okay" }]);
+        return;
+      }
+      setIsLoading(true);
+      await dispatch(authAction.signUp(email, password));
+      setIsLoading(false);
+    } catch (error) {
+      Alert.alert("Opss", error.message, [{ text: "Okay" }]);
+    }
+  };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.containerText}>
@@ -37,13 +54,15 @@ const AuthScreen = (props: any) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          color={Colors.primary}
-          onPress={() => {
-            dispatch(authAction.signUp(email, password));
-          }}
-        />
+        {isLoading ? (
+          <ActivityIndicator size="large" color={Colors.primary} />
+        ) : (
+          <Button
+            title="Login"
+            color={Colors.primary}
+            onPress={() => doLogin()}
+          />
+        )}
         <Button
           title="Sign up"
           color={Colors.accent}
