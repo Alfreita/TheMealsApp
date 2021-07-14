@@ -83,12 +83,12 @@ const ProductOverViewScreen = (props: any) => {
     });
   }, [dispatch, loadProducts]);
 
-  useEffect(() => {
-    const willFocusSub = navigation.addListener("willFocus", loadProducts);
-    // return () => {
-    //   willFocusSub.remove();
-    // };
-  }, [loadProducts]);
+  // useEffect(() => {
+  //   const willFocusSub = navigation.addListener("willFocus", loadProducts);
+  //   return () => {
+  //     willFocusSub.remove();
+  //   };
+  // }, [loadProducts]);
 
   if (isError) {
     return (

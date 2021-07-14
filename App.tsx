@@ -14,6 +14,8 @@ import cartReducer from "./reduxStore/reducer/cart";
 import orderReducer from "./reduxStore/reducer/order";
 import authReducer from "./reduxStore/reducer/auth";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
@@ -32,7 +34,14 @@ const fetchFont = async () => {
 export default function App() {
   const [fontLoaded, setFontLoded] = useState(false);
   const [isSignedIn, setIsSignIn] = useState(false);
-
+  // useEffect(() => {
+  //   const tryLogin = async () => {
+  //     const user = await AsyncStorage.getItem("@userData");
+  //     // console.log(JSON.parse(user));
+  //     if (user) setIsSignIn(true);
+  //   };
+  //   tryLogin();
+  // }, []);
   if (!fontLoaded) {
     return (
       <AppLoading

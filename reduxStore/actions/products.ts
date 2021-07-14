@@ -14,6 +14,8 @@ export const fetchProducts = () => {
         `https://theshopapp-2071e-default-rtdb.firebaseio.com/products.json?auth=${token}`
       );
       if (!response.ok) {
+        const error = await response.json();
+        // console.log(token);
         throw new Error("something went wrong");
       }
       const resData = await response.json();
@@ -94,7 +96,7 @@ export const createProduct = (
       });
     };
   } catch (error) {
-    console.log("erro" + error);
+    // console.log("erro" + error);
   }
 };
 

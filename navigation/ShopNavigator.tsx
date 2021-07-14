@@ -11,6 +11,7 @@ import UserProductScreen from "../screens/user/UserProductsScreen";
 import EditProductScreen from "../screens/user/EditProduct";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import AuthScreen from "../screens/user/AuthScreen";
+import StartUpScreen from "../screens/StartupScreen";
 
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -89,9 +90,15 @@ const AuthStack = (setIsAuth: any) => {
   return (
     <NavigationContainer>
       <AuthNavigator.Navigator
-        initialRouteName="Auth"
+        initialRouteName="StatUp"
         screenOptions={defaultHeaderStyle}
       >
+        <AuthNavigator.Screen
+          name="StatUp"
+          component={StartUpScreen}
+          options={{ title: "Validating" }}
+          initialParams={{ setIsAuth }}
+        />
         <AuthNavigator.Screen
           name="Auth"
           component={AuthScreen}
