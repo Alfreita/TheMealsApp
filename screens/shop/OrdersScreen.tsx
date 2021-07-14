@@ -1,5 +1,11 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { Text, FlatList, Platform, ActivityIndicator } from "react-native";
+import {
+  Text,
+  FlatList,
+  Platform,
+  ActivityIndicator,
+  View,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../components/UI/HeaderButton";
@@ -40,6 +46,13 @@ const OrderScreen = (props: any) => {
       color={Colors.primary}
       style={{ justifyContent: "center", alignItems: "center" }}
     />;
+  }
+  if (orders.length === 0) {
+    return (
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Text>No orders found, maybe starting adding a new one</Text>
+      </View>
+    );
   }
   return (
     <FlatList
