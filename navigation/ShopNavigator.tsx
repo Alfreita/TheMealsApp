@@ -120,7 +120,7 @@ const DrawerNavigation = (isAuth: boolean, setIsAuth: any) => {
     return (
       <NavigationContainer>
         <Drawer.Navigator
-          drawerContent={(props) => <LogoutButton {...props} />}
+          drawerContent={(props) => <LogoutButton {...props} setAuth={setIsAuth}/>}
           initialRouteName="Products"
           drawerContentOptions={{
             activeTintColor: Colors.primary,

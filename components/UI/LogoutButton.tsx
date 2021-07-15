@@ -4,10 +4,21 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { Text, Platform, View, StyleSheet } from "react-native";
+import { Text, Platform, View, StyleSheet, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const LogoutButton = (props: any) => {
+  const doLogout = async () => {
+    Alert.alert("Logout", "Logout done", [
+      {
+        text: "Okay",
+        style: "destructive",
+      },
+    ]);
+    await AsyncStorage.clear();
+    props.setAuth(false);
+  };
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
@@ -22,7 +33,7 @@ const LogoutButton = (props: any) => {
             <Text style={styles.text}>Logout</Text>
           </View>
         )}
-        onPress={() => alert("Logged out")}
+        onPress={() => doLogout()}
       />
     </DrawerContentScrollView>
   );
