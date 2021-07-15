@@ -4,11 +4,15 @@ export const SIGNUP = "SIGNUP";
 export const SIGNIN = "SIGNIN";
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
+let timer: any;
 
-export const authenticate = (userId: any, token: any) => {
+export const authenticate = (userId: any, token: any, expireTime: any) => {
   // console.log("1" + userId);
   // console.log("2" + token);
-  return { type: AUTHENTICATE, userId, token };
+  return (dispatch: any) => {
+    dispatch(setLogoutTime(expireTime));
+    dispatch({ type: AUTHENTICATE, userId, token });
+  };
 };
 
 export const signUp = (email: string, password: string) => {
@@ -40,7 +44,8 @@ export const signUp = (email: string, password: string) => {
     // console.log(resData);
     const token = resData.idToken;
     const userId = resData.localId;
-    dispacth(authenticate(userId, token));
+    const expire = parseInt(resData.expiresIn) * 1000;
+    dispacth(authenticate(userId, token, expire));
   };
 };
 
@@ -74,17 +79,32 @@ export const login = (email: string, password: string) => {
     // console.log(resData);
     const token = resData.idToken;
     const userId = resData.localId;
+    const expire = parseInt(resData.expiresIn) * 1000;
     const expirationDate = new Date(
       new Date().getTime() + parseInt(resData.expiresIn) * 1000
     ).toISOString();
     await saveAsyncStorag(token, userId, expirationDate);
-    dispacth(authenticate(userId, token));
+    dispacth(authenticate(userId, token, expire));
   };
 };
 
-export const logout =()=>{
-  return { type:LOGOUT}
-}
+export const logout = async () => {
+  clearLogoutTime();
+  await AsyncStorage.clear();
+  return { type: LOGOUT };
+};
+const clearLogoutTime = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+const setLogoutTime = (expirationTime: any) => {
+  return (dispatch: any) => {
+    timer = setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime);
+  };
+};
 export const saveAsyncStorag = async (
   token: any,
   userId: any,

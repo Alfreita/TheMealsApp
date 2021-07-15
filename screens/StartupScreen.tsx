@@ -20,7 +20,8 @@ const StartUpScreen = (props: any) => {
         props.navigation.navigate({ name: "Auth" });
         return;
       }
-      dispatch(authAction.authenticate(userId, token));
+      const expireTime = expirationDate.getTime() - new Date().getTime();
+      dispatch(authAction.authenticate(userId, token, expireTime));
       setIsAuth(true);
     };
     tryLogin();
